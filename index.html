@@ -1,0 +1,89 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <div v-html="paragrafo"></div>
+        <h1>{{ hello }}</h1>
+        <button @click="ola()">ola</button>
+        <form>
+            <label>Nome</label>
+            <input v-model="pessoa.nome" type="text" name="nome"/>
+            <label>Idade</label>
+            <input v-model="pessoa.idade" type="number" name="idade"/>
+            <label>Sexo</label></br>
+            <label>Masculino</label>
+            <input v-model="pessoa.sexo" name="sexo" type="radio" value="M"/>
+            <label>Feminino</label>
+            <input v-model="pessoa.sexo" name="sexo" type="radio" value="F"/>
+            <button @click="add()" type="button">salvar</button>
+        </form>
+        <table>
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Idade</th>
+                    <th>Sexo</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="(pessoa,index) in pessoas" :key="index">
+                    <td>{{ pessoa.nome }}</td>
+                    <td v-if="pessoa.idade > 18">{{ pessoa.idade }}</td>
+                    <td v-else >Menor de 18</td>
+                    <td>{{ pessoa.sexo }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+    <script>
+        const pessoas = [
+            { nome: "joão", idade: 15, sexo: "M" },
+            { nome: "maria", idade: 16, sexo: "F" },
+            { nome: "jane", idade: 19, sexo: "F" },
+            { nome: "marta", idade: 18, sexo: "F" },
+            { nome: "josé", idade: 30, sexo: "M" },
+            { nome: "ana", idade: 17, sexo: "F" },
+            { nome: "julia", idade: 40, sexo: "F" },
+            { nome: "mario", idade: 50, sexo: "M" },
+            { nome: "marcia", idade: 25, sexo: "F" },
+            { nome: "tiago", idade: 36, sexo: "M" },
+        ];
+        new Vue({
+            el: '#app',
+            data: () => ({
+                hello: 'hello world',
+                pessoas: pessoas,
+                nome:"tiago",
+                pessoa:{
+                    nome:'',
+                    idade:null,
+                    sexo:''
+                }
+            }),
+            computed:{
+                paragrafo(){
+                    return `<h1 style="color:red">${this.pessoa.nome}</h1>`;
+                }
+            },
+            methods:{
+                ola(){
+                    alert(`ola ${this.nome}`);
+                },
+                add(){
+                    this.pessoas.push(this.pessoa);
+                    this.pessoa = {};
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>
